@@ -1,9 +1,6 @@
 package de.pabloasencio.carddatabase.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,17 +16,22 @@ public class Car {
     private int year;
     private BigDecimal price;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
+    private Owner owner;
+
     public Car() {
 
     }
 
-    public Car(String brand, String model, String color, String registerNumber, int year, BigDecimal price) {
+    public Car(String brand, String model, String color, String registerNumber, int year, BigDecimal price, Owner owner) {
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.registerNumber = registerNumber;
         this.year = year;
         this.price = price;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -86,5 +88,13 @@ public class Car {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }
