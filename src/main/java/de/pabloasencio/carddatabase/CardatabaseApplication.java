@@ -1,9 +1,6 @@
 package de.pabloasencio.carddatabase;
 
-import de.pabloasencio.carddatabase.domain.Car;
-import de.pabloasencio.carddatabase.domain.CarRepository;
-import de.pabloasencio.carddatabase.domain.Owner;
-import de.pabloasencio.carddatabase.domain.OwnerRepository;
+import de.pabloasencio.carddatabase.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,12 +15,14 @@ public class CardatabaseApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(CardatabaseApplication.class);
 
-	private CarRepository carRepository;
-	private OwnerRepository ownerRepository;
+	private final CarRepository carRepository;
+	private final OwnerRepository ownerRepository;
+	private final UserRepository userRepository;
 
-	public CardatabaseApplication(CarRepository carRepository, OwnerRepository ownerRepository) {
+	public CardatabaseApplication(CarRepository carRepository, OwnerRepository ownerRepository, UserRepository userRepository) {
 		this.carRepository = carRepository;
 		this.ownerRepository = ownerRepository;
+		this.userRepository = userRepository;
 	}
 
 	public static void main(String[] args) {
@@ -41,6 +40,13 @@ public class CardatabaseApplication {
 			carRepository.save(new Car("Ford", "Mustang", "Red", "ADF-1121", 2107, BigDecimal.valueOf(59000), ownerOne));
 			carRepository.save(new Car("Nissan", "Leaf", "White", "SSJ-3002", 2014, BigDecimal.valueOf(29000), ownerTwo));
 			carRepository.save(new Car("Toyota", "Prius", "Silver", "KKO-0212", 2018, BigDecimal.valueOf(39000), ownerTwo));
+
+			userRepository.save(new User("user",
+					"$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi",
+					"USER"));
+			userRepository.save(new User("admin",
+					"$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
+					"ADMIN"));
 		};
 	}
 
